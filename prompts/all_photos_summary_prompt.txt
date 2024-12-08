@@ -1,0 +1,42 @@
+Review the individual analyses of all profile photos and provide a comprehensive dating profile assessment:
+
+1. **Calculate Final Category Scores (0-100):**
+    - Photo Quality Score: lighting, resolution, angles, composition
+    - No Catfish Score: face visibility, body shots, photo count, consistency
+    - Vibe Score: smile/serious balance, natural poses, candid moments
+    - Lifestyle Score: activities, travel, adventures, pursuits
+    - Social Proof Score: group dynamics, pets, social settings
+    - Stand Out Score: colors, formal wear, unique locations
+    - Overall Profile Score
+    - Potential Score
+2. **Profile Completeness Check:**
+    - Must-Have Photos Verification:
+        - First photo: clear smiling headshot
+        - Full body shot presence
+        - Activity/hobby representation
+        - Social proof inclusion
+        - Travel/unique location
+        - Photo variety assessment
+        - Total photo count (minimum 4, optimal 7)
+3. **Detailed Criteria Analysis:**
+    - List specifically:
+        - Successfully met criteria (reference specific photos)
+        - Missing elements
+        - Red flags detected (specify photos)
+        - Standout features
+4. **Improvement Recommendations:**
+    - Provide specific guidance:
+        - Which photos to remove (with reasons)
+        - What types of photos to add
+        - How to improve existing photos
+        - Priority order of improvements
+        - Potential score achievable with improvements
+
+Format the response with:
+
+- Clear section headers
+- Specific photo references
+- Numerical scores
+- Prioritized recommendations
+
+Keep feedback constructive and actionable, focusing on specific improvements that will maximize profile effectiveness.

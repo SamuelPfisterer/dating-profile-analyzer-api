@@ -1,0 +1,57 @@
+
+Analyze this dating profile photo against these specific criteria and provide a detailed assessment:
+
+1. **Photo Quality Score (0-100)**
+    - Lighting quality (natural and well-lit)
+    - Resolution and focus clarity
+    - Background (clean vs cluttered)
+    - Subject positioning (front and center)
+    - Professional appearance
+    - Different angles
+2. **No Catfish Score (0-100)**
+    - Face visibility (0-100)
+    - Photo type (headshot/full body/activity)
+    - Natural vs posed
+    - If group photo: subject prominence
+    - Shirtless check (if applicable: natural setting?)
+    - Sunglasses/hats presence (negative impact)
+3. **Vibe Score (0-100)**
+    - Smile authenticity (0-100)
+    - Expression type (smiling/serious)
+    - Pose naturalness (0-100)
+    - Candid vs staged (0-100)
+    - Confidence display (0-100)
+4. **Lifestyle Score (0-100)**
+    - Activity type (travel/sports/outdoors)
+    - Adventure/creative pursuits
+    - Cultural experiences
+    - Location type
+5. **Social Proof Score (0-100)**
+    - Group dynamics (if applicable)
+    - Pet presence
+    - Social setting
+    - Luxury elements
+    - Professional/formal setting
+6. **Stand Out Score (0-100)**
+    - Color vibrancy (0-100)
+    - Black and white filtering (0-100)
+    - Formal attire (0-100)
+    - Location uniqueness (0-100)
+7. **Red Flag Check**
+    - Selfie type (bathroom/mirror/car)
+    - Image quality issues
+    - Group photo issues
+    - Angle problems
+    - Background appropriateness
+    - Sunglasses/hat presence
+    - Shirtless context
+    - Duplicate/similar photo check
+
+For each category, provide:
+
+- A continuous score (0-100)
+- Specific observations on how well criteria are met
+- Any red flags detected
+- Standout elements
+
+Keep analysis factual and specific to observable elements in this single photo.
