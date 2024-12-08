@@ -95,7 +95,7 @@ async def analyze_photos(photos: List[UploadFile] = File(...)):
     try:
         # Initialize the LLMs
         llm = ChatOpenAI(
-            model_name="gpt-4-vision-preview",
+            model_name="gpt-4o",
             temperature=0.7,
             max_tokens=4096
         )
