@@ -93,33 +93,70 @@ async def root():
 @app.post("/analyze-photos/", response_model=ProfileAnalysis)
 async def analyze_photos(photos: List[UploadFile] = File(...)):
     try:
-        # Initialize the LLMs
-        llm = ChatOpenAI(
-            model_name="gpt-4o",
-            temperature=0.7,
-            max_tokens=4096
-        )
+        print("Starting photo analysis...")
         
-        structured_llm = llm.with_structured_output(schema=ProfileAnalysis, strict=True)
+        # Initialize the LLMs
+        try:
+            print("Initializing LLM...")
+            llm = ChatOpenAI(
+                model_name="gpt-4o",
+                temperature=0.7,
+                max_tokens=4096
+            )
+            print("LLM initialized successfully")
+        except Exception as e:
+            print(f"Error initializing LLM: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"LLM initialization failed: {str(e)}")
+        
+        try:
+            print("Creating structured LLM...")
+            structured_llm = llm.with_structured_output(ProfileAnalysis)
+            print("Structured LLM created successfully")
+        except Exception as e:
+            print(f"Error creating structured LLM: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Structured LLM creation failed: {str(e)}")
         
         # Read prompt templates
-        single_photo_prompt = read_prompt_file("prompts/single_photo_prompt.txt")
-        summary_prompt = read_prompt_file("prompts/all_photos_summary_prompt.txt")
+        try:
+            print("Reading prompt templates...")
+            single_photo_prompt = read_prompt_file("prompts/single_photo_prompt.txt")
+            summary_prompt = read_prompt_file("prompts/all_photos_summary_prompt.txt")
+            print("Prompt templates read successfully")
+        except Exception as e:
+            print(f"Error reading prompt files: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Failed to read prompt files: {str(e)}")
         
         # Analyze each photo
         individual_analyses = []
         for idx, photo in enumerate(photos, 1):
-            content = await photo.read()
-            analysis = analyze_single_photo(llm, single_photo_prompt, content, idx)
-            individual_analyses.append(analysis)
+            try:
+                print(f"Processing photo {idx}...")
+                content = await photo.read()
+                print(f"Photo {idx} read successfully, size: {len(content)} bytes")
+                analysis = analyze_single_photo(llm, single_photo_prompt, content, idx)
+                individual_analyses.append(analysis)
+                print(f"Photo {idx} analyzed successfully")
+            except Exception as e:
+                print(f"Error processing photo {idx}: {str(e)}")
+                import traceback
+                print(f"Traceback for photo {idx}: {traceback.format_exc()}")
+                raise HTTPException(status_code=500, detail=f"Error processing photo {idx}: {str(e)}\nTraceback: {traceback.format_exc()}")
         
         # Generate structured summary
-        structured_summary = create_summary(structured_llm, summary_prompt, individual_analyses)
-        
-        return structured_summary
+        try:
+            print("Generating final summary...")
+            structured_summary = create_summary(structured_llm, summary_prompt, individual_analyses)
+            print("Summary generated successfully")
+            return structured_summary
+        except Exception as e:
+            print(f"Error generating summary: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Failed to generate summary: {str(e)}")
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        import traceback
+        error_detail = f"Unexpected error: {str(e)}\nTraceback: {traceback.format_exc()}"
+        print(error_detail)
+        raise HTTPException(status_code=500, detail=error_detail)
 
 if __name__ == "__main__":
     import uvicorn
