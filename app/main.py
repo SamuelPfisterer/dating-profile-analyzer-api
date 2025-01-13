@@ -5,6 +5,8 @@ import os
 from dotenv import load_dotenv
 from app.schemas import ProfileAnalysis
 from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate
 import base64
 from PIL import Image
 import io
@@ -57,9 +59,13 @@ def analyze_single_photo(llm, prompt_template, image_bytes, photo_number):
     
     messages = [
         {
+            "role": "system",
+            "content": prompt_template
+        },
+        {
             "role": "user",
             "content": [
-                {"type": "text", "text": numbered_prompt},
+                {"type": "text", "text": f"[Photo {photo_number}] Please analyze this photo:"},
                 {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
             ]
         }
@@ -68,7 +74,7 @@ def analyze_single_photo(llm, prompt_template, image_bytes, photo_number):
     response = llm.invoke(messages)
     return f"[Photo {photo_number}] {response.content}"
 
-def create_summary(llm, summary_prompt, individual_analyses):
+def create_summary_old(llm, summary_prompt, individual_analyses):
     """Create a summary of all photo analyses."""
     # Combine all analyses into one text
     all_analyses = "\n\n===NEXT PHOTO===\n\n".join(individual_analyses)
@@ -81,6 +87,27 @@ def create_summary(llm, summary_prompt, individual_analyses):
     ]
     
     return llm.invoke(messages)
+
+def create_summary(llm, main_prompt, individual_analyses):
+    """Create a summary of all photo analyses using a prompt template."""
+    
+    # Create the chat template with system message and main prompt
+    template = ChatPromptTemplate.from_messages([
+        SystemMessage(content=main_prompt),
+        ("human", "Please create an profile analysis for the following profile. Analyses to review:\n{analyses}")
+    ])
+    
+    # Format the analyses with numbering
+    formatted_analyses = ""
+    for idx, analysis in enumerate(individual_analyses, 1):
+        formatted_analyses += f"\n\n=== PHOTO #{idx} ANALYSIS ===\n\n{analysis}"
+    
+    # Generate messages using the template
+    messages = template.format_messages(analyses=formatted_analyses)
+    
+    # Generate summary
+    response = llm.invoke(messages)
+    return response
 
 @app.get("/")
 async def root():
